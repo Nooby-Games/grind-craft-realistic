@@ -123,6 +123,9 @@ function addArea(id, contents) {
     // If the area is unlocked: add it to the unlocked areas list
     if (contents.unlocked && !player.unlockedAreas.includes(id)) player.unlockedAreas.push(id);
 
+    // If the area doesn't have any grinds: Create an empty array
+    if (!contents.grinds) contents.grinds = [];
+
     // For every grind in the area
     for (let grind of contents.grinds) {
         // If the grind is unlocked: add it to the unlocked grinds list
@@ -221,31 +224,18 @@ function addResources(contents) {
     // For every resource
     for (let resource in contents) {
         // Replace image texts
-        if (contents[resource].image === "" || contents[resource].image === "blank") contents[resource].image = "images/system/blank.png";
+        if (!contents[resource].image || contents[resource].image === "blank") contents[resource].image = "images/system/blank.png";
         if (contents[resource].image === "wip") contents[resource].image = "images/system/wip.png";
 
-        // If the resource is not already in the player object: check if it has an amount property. If not: set it to 0
-        if (!player.resources[resource]) {
-            if (contents[resource].amount === undefined) contents[resource].amount = 0;
+        // If the resource already exists in the player object: Save its amount. Else: Create an empty object
+        if (player.resources[resource] && player.resources[resource].amount) contents[resource].amount = player.resources[resource].amount;
+        else player.resources[resource] = { amount: 0 };
+
+        // Update other resource data
+        player.resources[resource] = {
+            ...player.resources[resource],
+            ...contents[resource],
         }
-
-        // If the resource is already in the player object ...
-        else {
-            // ... update image
-            player.resources[resource].image = contents[resource].image;
-            
-            // ... update limit
-            player.resources[resource].limit = contents[resource].limit;
-
-            // Remove the resource from the contents object
-            delete contents[resource];
-        }
-    }
-
-    // Add the remaining resources to the player object
-    player.resources = {
-        ...player.resources,
-        ...contents,
     }
 }
 
