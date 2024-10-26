@@ -113,6 +113,22 @@ autoSaveInputEl.addEventListener("change", () => {
 
 // Add area to the player object
 function addArea(id, contents) {
+    // Checks if an area with the same id already exists
+    if (id in player) {
+        throw "An area with id " + id + " already exists!";
+    }
+
+    // Set default values for the area
+    if (!verifyString(contents.name)) contents.name = "";
+    if (!contents.image || contents.image === "blank") contents.image = "images/system/blank.png";
+    if (typeof contents.unlocked !== "boolean") contents.unlocked = true;
+    if (typeof contents.updateWhileUnactive !== "boolean") contents.updateWhileUnactive = true;
+
+    // If the area doesn't have grinds or crafts: Create empty arrays
+    if (!contents.grinds) contents.grinds = [];
+    if (!contents.crafts) contents.crafts = [];
+
+    // Add the area to the player object
     contents.lastUpdate = Date.now();
     player[id] = contents;
     player.areaList.push(id);
@@ -122,9 +138,6 @@ function addArea(id, contents) {
 
     // If the area is unlocked: add it to the unlocked areas list
     if (contents.unlocked && !player.unlockedAreas.includes(id)) player.unlockedAreas.push(id);
-
-    // If the area doesn't have any grinds: Create an empty array
-    if (!contents.grinds) contents.grinds = [];
 
     // For every grind in the area
     for (let grind of contents.grinds) {
@@ -136,6 +149,10 @@ function addArea(id, contents) {
 // Set the game info
 function setGameInfo(info) {
     player.gameInfo = info;
+
+    if (!player.saveGotten && localStorage[player.gameInfo.ID]) {
+        getSavedData(localStorage[player.gameInfo.ID]);
+    }
 }
 
 // Get saved data
@@ -217,10 +234,6 @@ function decodeSave(str) {
 
 // Add resources to the player object
 function addResources(contents) {
-    if (!player.saveGotten && localStorage[player.gameInfo.ID]) {
-        getSavedData(localStorage[player.gameInfo.ID]);
-    }
-
     // For every resource
     for (let resource in contents) {
         // Replace image texts
@@ -236,15 +249,22 @@ function addResources(contents) {
             ...player.resources[resource],
             ...contents[resource],
         }
+
+        // Verify resource data
+        if (!verifyNumber(player.resources[resource].amount)) {
+            throw "Resource " + resource + " has an invalid amount: " + contents[resource].amount;
+        }
+        if (!verifyString(player.resources[resource].image)) {
+            throw "Resource " + resource + " has an invalid image: " + contents[resource].image;
+        }
+        if ("limit" in player.resources[resource] && !verifyMinMaxNumber(player.resources[resource].limit, 0)) {
+            throw "Resource " + resource + " has an invalid limit: " + contents[resource].limit;
+        }
     }
 }
 
 // Add variables to the player object
 function addVariables(contents) {
-    if (!player.saveGotten && localStorage[player.gameInfo.ID]) {
-        getSavedData(localStorage[player.gameInfo.ID]);
-    }
-
     // For every variable
     for (let variable in contents) {
         // Get the variable type

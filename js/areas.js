@@ -1,4 +1,4 @@
-// Game Info
+// Game Info - THIS HAS TO BE THE FIRST FUNCTION YOU CALL!
 setGameInfo({
     name: "My Grindcraft Game",                         // The name of your game!
     version: "0.1",                                     // The current version of your game!
@@ -62,19 +62,19 @@ addArea("c",                                            // Function for adding a
     crafts: [
         {
             name: "stick",
-            desc: "Used to craft planks",
+            desc: "Required to craft planks",
             type: "display",
             cost: [["stick", 0]],
         },
         {
             name: "dirt",
-            desc: "Used to build a dirt hut",
+            desc: "Required to build a dirt hut",
             type: "display",
             cost: [["dirt", 0]],
         },
         {
             name: "planks",
-            desc: "Used to make a crafting table",
+            desc: "Required to make a crafting table",
             type: "craft",
             cost: [["stick", 2]],
         },
