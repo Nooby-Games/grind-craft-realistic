@@ -2,7 +2,7 @@
 
 Crafts are used to craft different resources into new items. To add a new craft, go to the "crafts" property in the `addArea` function:
 
-```
+```js
 crafts: [
      {
           name: "stick",                                                        // Name/id of the resource

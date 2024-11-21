@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title></title>
+</head>
+<body>
+
+<div class="top-div" style="display: none;">
+    <h1>Grind</h1>
+    <h1>Craft</h1>
+    <div class="top-sub-div">
+        <h2 class="tps-text"></h2>
+        <button class="settings-top-button"><img src="images/system/settings.png"></button>
+    </div>
+</div>
+
+<div class="main-div" style="display: none;">
+    <div class="left-div">
+        <div class="left-top-div"></div>
+        <h1>Areas</h1>
+        <div class="left-bottom-div"></div>
+    </div>
+    <div class="right-div"></div>
+</div>
+
+<div class="recipe-div" style="display: none;">
+    <p class="recipe-name"></p>
+    <div class="recipe-cost-div"></div>
+    <p class="recipe-desc"></p>
+</div>
+
+<div class="grind-resource-div" style="display: none;"></div>
+
+<div class="message-div" style="display: none;">
+    <p class="message-text"></p>
+    <button class="message-button">Ok</button>
+</div>
+
+<div class="settings-div" style="display: none;">
+    <h2 class="setting-header">Settings:</h2>
+    <div class="setting">
+        <p class="setting-text">Max FPS: </p>
+        <div class="setting-input-div">
+            <label for="maxFPSInput" id="maxFPSLabel">100</label>
+            <input id="maxFPSInput" type="range" min="1" max="1000" value="100" class="settingInput">
+        </div>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Show Grind Materials: </p>
+        <label class="container">
+            <input id="showGrindMaterialsInput" checked="true" type="checkbox" class="setting-input">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Show Craft Recipes: </p>
+        <label class="container">
+            <input id="showCraftRecipesInput" checked="true" type="checkbox" class="setting-input">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Enable Auto-Crafts: </p>
+        <label class="container">
+            <input id="enableAutobuysInput" checked="true" type="checkbox" class="setting-input">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Auto-Save: </p>
+        <label class="container">
+            <input id="autoSaveInput" type="checkbox" checked="true" class="setting-input">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Manual Save: </p>
+        <div>
+            <button id="saveButton">Save</button>
+        </div>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Import Save: </p>
+        <div>
+            <input id="importSaveInput" type="text" class="setting-input">
+            <button id="importSaveButton">Import</button>
+        </div>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Export Save: </p>
+        <div>
+            <button id="copySaveButton">Copy Save</button>
+        </div>
+    </div>
+
+    <div class="setting">
+        <p class="setting-text">Reset Save: </p>
+        <div>
+            <button id="resetSaveButton">Reset Save</button>
+        </div>
+    </div>
+
+    <p class="setting-text">Made with the <a href="https://github.com/MiraTheCat/Grindcraft-Game-Maker" target="_blank">Grindcraft Game Maker</a> tool!</p>
+    <p id="toolVersion" class="setting-text">(Version X)</p>
+
+    <button class="settings-button">Ok</button>
+</div>
+
+<script src="js/valueChecks.js"></script>
+
+<script>
+    let player = {
+        currentArea: 0,
+        toolVersion: "1.1.2",
+        areaList: [],
+        lastScreenUpdate: Date.now(),
+        resources: {
+            resource1: { amount: 5 },
+        },
+        variables: {
+            normal: {},
+            static: {},
+            temp: {},
+        },
+        currentTicks: 0,
+        currentTime: 0,
+        maxFPS: 100,
+        showGrindMats: true,
+        showCraftRecipes: true,
+        enableAutobuys: true,
+        autoSave: true,
+        saveGotten: false,
+        switchArea: false,
+        unlockedAreas: [],
+        unlockedGrinds: {},
+    };
+
+    const contents = {
+        name: "City State",
+        image: "images/areas/cityState.png",
+        unlocked: () => true,
+        updateWhileUnactive: true,
+
+        grinds: [
+            {
+                name: "surface",
+                auto: ["dirt hut"],                         // List of items that will auto-grind this grind
+                background: "images/grinds/overworld.png",
+                resources: [
+                    {
+                        id: "stick",
+                        time: [["", 0.5]],
+                        probability: 50,
+                    },
+                    {
+                        id: "dirt",
+                        time: [["", 0.6]],
+                        probability: 50,
+                    },
+                ]
+            },
+        ],
+
+        crafts: [
+            {
+                name: "stick",
+                desc: "Required to craft planks",
+                type: "display",
+                cost: [["stick", 0]],
+            },
+            {
+                name: "dirt",
+                desc: "Required to build a dirt hut",
+                type: "display",
+                cost: [["dirt", 0]],
+            },
+            {
+                name: "planks",
+                desc: "Required to make a crafting table",
+                type: "craft",
+                cost: [["stick", 2]],
+            },
+            {
+                name: "crafting table",
+                desc: "Required to build a dirt hut",
+                type: "craft",
+                cost: [["planks", 4]],
+            },
+            {
+                name: "door",
+                desc: "Required to build a dirt hut",
+                type: "craft",
+                amount: 3,
+                cost: [["planks", 6]],
+            },
+            {
+                name: "dirt hut",
+                desc: "Required to beat the game!",
+                type: "craft",
+                cost: [["dirt", 23], ["crafting table", 1], ["door", 1]],
+                message: "You have beaten the game!",
+            },
+        ],
+    };
+
+    let temp = {};
+
+    // Add area to the player object
+    function addArea(id, contents) {
+        // Checks if an area with the same id already exists
+        if (id in player) {
+            throw "An area with id " + id + " already exists!";
+        }
+
+        // Set default values for the area
+        if (!verifyExistence(contents.name)) contents.name = "";
+        if (!contents.image || contents.image === "blank") contents.image = "images/system/blank.png";
+        if (!verifyExistence(contents.unlocked)) contents.unlocked = true;
+        if (!verifyExistence(contents.updateWhileUnactive)) contents.updateWhileUnactive = true;
+
+        // If the area doesn't have grinds or crafts: Create empty arrays
+        if (!verifyExistence(contents.grinds)) contents.grinds = [];
+        if (!verifyExistence(contents.crafts)) contents.crafts = [];
+
+        // Add the area to the player object
+        contents.lastUpdate = Date.now();
+        player[id] = contents;
+        player.areaList.push(id);
+
+        // Create a property with the area id in the temp object
+        temp[id] = {};
+
+        updateAreaTemp(id, contents);
+
+        // Adds the area to the unlockedGrinds property
+        if (!player.unlockedGrinds[id]) player.unlockedGrinds[id] = [];
+
+        // If the area is unlocked: add it to the unlocked areas list
+        if (contents.unlocked && !player.unlockedAreas.includes(id)) player.unlockedAreas.push(id);
+
+        // For every grind in the area
+        for (let grindObj of contents.grinds) {
+            // Check if the grind contains valid data and convert function properties to their return values
+            let grind = grindObj;
+
+            // If the grind is unlocked: add it to the unlocked grinds list
+            if (grind.unlocked && !player.unlockedGrinds[id].includes(grind.name)) player.unlockedGrinds[id].push(grind.name);
+        }
+    }
+
+    function addGrind() {
+        // Add grind to unlockedGrinds list
+        // Set default values for grind
+    }
+
+    // Function for updating an area temp object, and checking that the values are valid
+    function updateAreaTemp(id, areaData) {
+        // Get property values from the area data
+        temp[id].name = getPropertyValue(areaData.name);
+        temp[id].image = getPropertyValue(areaData.image);
+        temp[id].unlocked = getPropertyValue(areaData.unlocked);
+        temp[id].updateWhileUnactive = getPropertyValue(areaData.updateWhileUnactive);
+
+        // Check that the values are valid
+        if (!verifyString(temp[id].name)) throw "Area " + id + " has an invalid name: " + temp[id].name + "\n The value must be a string!";
+        if (!verifyString(temp[id].image)) throw "Area " + id + " has an invalid image: " + temp[id].image + "\n The value must be a string!";
+        if (!verifyBoolean(temp[id].unlocked)) throw "Area " + id + " has an invalid unlocked value: " + temp[id].unlocked + "\n The value must be a boolean!";
+        if (!verifyBoolean(temp[id].updateWhileUnactive)) throw "Area " + id + " has an invalid updateWhileUnactive value: " + temp[id].updateWhileUnactive + "\n The value must be a boolean!";
+
+        // Get grind and craft data from the area data
+        areaGrinds = getPropertyValue(areaData.grinds);
+        areaCrafts = getPropertyValue(areaData.crafts);
+
+        // Check that the values are valid
+        if (!Array.isArray(areaGrinds)) throw "Area " + id + " grind list is not an array: " + areaGrinds;
+        if (!Array.isArray(areaCrafts)) throw "Area " + id + " craft list is not an array: " + areaCrafts;
+
+        // Create empty grind and craft arrays
+        temp[id].grinds = [];
+        temp[id].crafts = [];
+
+        // Update grind temp data
+        for (i in areaGrinds) {
+            let grind = getPropertyValue(areaGrinds[i]);
+            if (!verifyObject(grind)) throw "Area " + id + " has an invalid value for the grind with index " + i + ": " + grind + "\n The value must be an object!";
+            updateGrindTemp(id, grind);
+        }
+
+        // Update craft temp data
+        for (i in areaCrafts) {
+            let craft = getPropertyValue(areaCrafts[i]);
+            if (!verifyObject(craft)) throw "Area " + id + " has an invalid value for the craft with index " + i + ": " + craft + "\n The value must be an object!";
+            updateCraftTemp(id, craft);
+        }
+    }
+
+    // Function for updating a grind temp object, and checking that the values are valid
+    function updateGrindTemp(areaID, grindData) {
+        // Create an empty object in the temp grind list
+        temp[areaID].grinds.push({});
+
+        // save the temp grind object to a variable
+        let tempGrindIndex = temp[areaID].grinds.length - 1;
+        let tempGrind = temp[areaID].grinds[tempGrindIndex];
+        
+        // Get property values from the grind data
+        tempGrind.name = getPropertyValue(grindData.name);
+
+        // Check that the values are valid
+        if (!verifyString(tempGrind.name)) throw "The grind with index " + tempGrindIndex + " in area " + areaID + " has an invalid name: " + tempGrind.name + "\n The value must be a string!";
+        if (tempGrind.name === "") throw "The grind with index " + tempGrindIndex + " in area " + areaID + " has an invalid name: " + tempGrind.name + "\n The value must not be empty!";
+    }
+
+    // Function for updating a craft temp object, and checking that the values are valid
+    function updateCraftTemp(areaID, craftData) {
+
+    }
+
+    // Function for getting the value of a property
+    // If the property is a function, return the function's return value
+    function getPropertyValue(property, generateDuplicate = false) {
+        // If the property is a function: Return function return value
+        if (typeof property === "function") {
+            return property();
+        }
+
+        // If a duplicate should be generated, and the property is an array or object: Return duplicate
+        if (generateDuplicate) {
+            if (Array.isArray(property)) {
+                return Object.assign([], property);
+            }
+            if (typeof property === "object" && property !== null) {
+                return Object.assign({}, property);
+            }
+        }
+
+        // Return the property
+        return property;
+    }
+
+    // Check that grinds and crafts contain valid data
+    // Add temp object that stores area and variable data
+
+    addArea("c", contents);
+
+    console.log(player.c);
+
+</script>
+
+</body>
+</html>

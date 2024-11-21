@@ -15,7 +15,7 @@ The benefits of using Github:
 
 2. Make a Github account.
 
-3. Log in on your browser, and go back to the Grindcraft Game Maker page. At the top right, there should be a button that says "fork". Click on it, and then on your username. You now have your own fork, or copy, of Grindcraft Game Maker tool!
+3. Log in on your browser, and go back to the [Grindcraft Game Maker page](https://github.com/MiraTheCat/Grindcraft-Game-Maker). At the top right, there should be a button that says "fork". Click on it, and then on your username. You now have your own fork, or copy, of Grindcraft Game Maker tool!
 
 4. Open Github Desktop and log in. Ignore everything else and choose "clone a repository". A "repository" is basically a "Github project", like the Grindcraft Game Maker. "Cloning" is downloading a copy of the repository to your computer.
 
@@ -57,3 +57,8 @@ To make custom Discord links for your game, go over to [index.html](/index.html)
 
 To change the Discord link, you just change the text inside the `content=""` in these tags!
 However, Discord usually takes a long time to update the contents of the links, so you might not see these changes in action until maybe 15-30 minutes later.
+
+### Disclaimer
+
+Most of this page has been copied from [The Modding Tree's tutorial](https://github.com/Acamaeda/The-Modding-Tree) and tweaked where necessary.
+If you've ever played [The Prestige Tree](https://jacorb90.me/Prestige-Tree/) and have been wanting to make a similar game yourself, then I suggest you try out this tool!

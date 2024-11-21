@@ -2,7 +2,7 @@
 
 Grinds are the main way to get resources. To add a new grind, go to the "grinds" property in the `addArea` function:
 
-```
+```js
 grinds: [
     {
         name: "surface",                                // Name of the grind
@@ -61,7 +61,7 @@ Inside the `resources: [],` property, you have to add all the different resource
 
 
 Resources are stored in the following format:
-```
+```js
 {
     id: "name",                             // Name of resource        
     time: [["tool", time, amount]],         // Time to grind with different tools
@@ -89,7 +89,7 @@ Individual resources can have these properties:
  - probability: A number that tells how likely a resource is to be chosen as your next grind. (If for example resource 1 has a probability of 1 and resource 2 has a probability of 2, resource 2 is twice as likely to be chosen as resource 1).
  - customResources (Advanced): **optional**. If the above properties are too simple for you, you can make the different resources in the grind reward custom resources, instead of just using the id name. Here's an example of what custom resources might look like:
 
-```
+```js
 {
     id: "cow",                                                  // Can be whatever you want, since it won't be used anyways!
     time: [["stone sword", 0.5], ["wooden sword", 0.8]],

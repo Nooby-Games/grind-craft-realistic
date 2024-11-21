@@ -1,7 +1,7 @@
 // Player object
 let player = {
     currentArea: 0,
-    toolVersion: "1.1.2",
+    toolVersion: "1.2 - Beta",
     areaList: [],
     lastScreenUpdate: Date.now(),
     resources: {},
@@ -22,6 +22,8 @@ let player = {
     unlockedAreas: [],
     unlockedGrinds: {},
 };
+
+let temp = {};
 
 let bodyEl = document.querySelector("body");
 let titleEl = document.querySelector("title");

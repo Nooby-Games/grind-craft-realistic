@@ -6,7 +6,7 @@ To add custom function and variables to your game, you first have to know how al
 
 Everything in your game is saved in the `player` object. Knowing how it looks and how it works is useful for creating advanced games.
 
-```
+```js
 player = {
     // Player stats
     currentArea: 0,                                         // The location in the areaList of your current area (0 is the first value.)
@@ -112,7 +112,7 @@ player = {
 ### Custom variables
 
 For more advanced games, it might be useful to create your own variables to store different stats/values for even more functionality. If you want to create a variable, you have to use the `addVariables` function:
-```
+```js
 addVariables({
     coolVariableName: {                             // Name of the variable
         value: "Test",                              // The variable value
@@ -154,7 +154,7 @@ This can be used for anything you want, and is useful for checking the current a
 
 The `onLoad` function is runned once after opening the website, before the `screenUpdate` function starts:
 
-```
+```js
 function onLoad(oldVersion) {
     // If the game version in the player's save is not the same as the current game version:
     if (oldVersion !== player.gameInfo.version) {

@@ -2,7 +2,7 @@
 
 Resources are basically all the items, tools, buildings, people and animals that exist in your game. To add a new resource, you have to use the `addResources` function:
 
-```
+```js
 addResources(                                          // Function for adding all the resources (items/tools/buildings) that are used in your game!
     {
      dirt: {                                           // Name of the resource
@@ -21,7 +21,7 @@ addResources(                                          // Function for adding al
 Inside the `addResources` function, you have to add all your different resources.
 
 Resources are stored in the following format:
-```
+```js
 name: {                                           // Name of the resource
      image: "images/imageName.fileType",          // link/path to the image of the resource
      amount: 0,                                   // The amount of items of this resource that you start with

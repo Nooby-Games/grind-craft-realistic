@@ -5,7 +5,7 @@
  3. Put numbers or booleans (true/false) inside quotation marks. Numbers and booleans should never be in quotation marks, except when you are using them as just text (either in a name or description).
  4. Forgot a bracket (`[]` or `{}`). Always remember to put brackets both before and after the contents of a grind, craft or resource:
 
-```
+```js
 dirt: {
     image: "images/dirt.png",
 },

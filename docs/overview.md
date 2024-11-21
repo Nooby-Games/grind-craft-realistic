@@ -11,7 +11,7 @@ If you want, you can just copy this into your [areas.js](/js/areas.js) file and 
 ### Code Overview:
 
 (Text after a "//" just means that it's a comment and won't change anything in the code.)
-```
+```js
 // Game Info
 
 setGameInfo({
