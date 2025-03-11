@@ -48,7 +48,8 @@ Individual crafts can have these properties:
    - Example: `cost: [["planks", 3], ["stick", 2]],`
    - With this, the item would cost 3 planks and 2 sticks to craft.
    - **Important:**
-     - If you put 0 as the amount, you will still need at least 1 of the resource to craft the item, but the resource won't be used.
+     - If you put 0 as thekjumki
+     /; amount, you will still need at least 1 of the resource to craft the item, but the resource won't be used.
      - If you put a negative number as the amount (for example -5), you will need at least 5 of the resource to craft the item, but the resource won't be used.
  - message: **optional**. Sends a message on screen the first time you craft this item. Can be anything you want!
  - unlockGrinds: **optional**. A list of grinds that will be unlocked by crafting this item. (For example: `unlockGrinds: ["forest", "farm"],`).

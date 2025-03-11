@@ -1,9 +1,9 @@
 // Game Info
 setGameInfo({
-    name: "My Grindcraft Game",                         // The name of your game!
+    name: "Grindcraft Realistic Edition",                         // The name of your game!
     version: "0.1",                                     // The current version of your game!
-    icon: "images/system/blank.png",                    // Link or path to an icon image for your game!
-    ID: "myGrindcraftGame",                             // Your game's ID! Should be unique for every game!
+    icon: "images/system/favicon.ico",                    // Link or path to an icon image for your game!
+    ID: "grindcraftRelisticEdition",                             // Your game's ID! Should be unique for every game!
 });
 
 // Resources
@@ -11,6 +11,9 @@ setGameInfo({
 addResources({                                          // Function for adding all the resources (items/tools/buildings) that are used in your game!
     dirt: {
         image: "images/dirt.png",
+    },
+    leaves: {
+        image: "images/leaf.png"
     },
     wood: {
         image: "images/wood.png",
@@ -29,6 +32,9 @@ addResources({                                          // Function for adding a
     },
     "wood farm":{
         image: "images/woodFarm.jpeg"
+    },
+    "wooden hoe": {
+        image: "images/woodenHoe.png"
     }
 });
 
@@ -36,7 +42,7 @@ addResources({                                          // Function for adding a
 
 addArea("c",                                            // Function for adding areas to your game
 {
-    name: "City State",
+    name: "Overworld",
     image: "images/areas/cityState.png",
     unlocked: true,
     updateWhileUnactive: true,
@@ -51,19 +57,43 @@ addArea("c",                                            // Function for adding a
                 
                 {
                     id: "wood",
-                    time: [["", 0.5]],
+                    time: [["", 3]],
                     probability: 100,
                 },
+            ]
+        },
+        {
+            name: "Grab Leaves",
+            unlocked: true,
+            auto: ["wood farm"],                         // List of items that will auto-grind this grind
+            background: "images/grinds/overworld.png",
+            resources: [
+                
+                {
+                    id: "leaves",
+                    time: [["wooden hoe", 0.05]],
+                    probability: 100,
+                },
+
             ]
         },
     ],
 
     crafts: [
+        
         {
             name: "stick",
             desc: "Used to craft planks",
             type: "craft",
             cost: [["planks", 2]],
+            amount: 4,
+        },
+        
+        {
+            name: "leaves",
+            desc: "Can drop saplings or sticks. Can be used for farms.",
+            type: "display",
+            cost: [["leaves", 0]],
             amount: 4,
         },
         {
@@ -99,10 +129,17 @@ addArea("c",                                            // Function for adding a
             cost: [["planks", 6]],
         },
         {
+            name: "wooden hoe",
+            desc: "Used for farming or breaking leaves/hay bales",
+            type: "craft",
+            cost: [["crafting table", 1],["sticks", 2], ["wood", 2]],
+    
+        },
+        {
             name: "wood farm",
             desc: "Required to beat the game!",
             type: "craft",
-            cost: [["dirt", 23], ["crafting table", 1], ["door", 1]],
+            cost: [["crafting table", 1]["dirt", 23],["door", 1]],
         },
     ],
 
