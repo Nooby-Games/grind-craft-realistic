@@ -93,7 +93,7 @@ Individual resources can have these properties:
 {
     id: "cow",                                                  // Can be whatever you want, since it won't be used anyways!
     time: [["stone sword", 0.5], ["wooden sword", 0.8]],
-    image: "images/cow.png",
+    image: "images/cow.png"2,
     probability: 30,
     customResources: {                                          // Tells the grind what resources you will get from this grind
         guaranteed: [                                           // You are guaranteed to get these resources when grinding
