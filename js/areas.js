@@ -1,6 +1,6 @@
-// Game Info
+ // Game Info
 setGameInfo({
-    name: "My Grindcraft Game",                         // The name of your game!
+    name: "Grindcraft Realistic",                         // The name of your game!
     version: "0.1",                                     // The current version of your game!
     icon: "images/system/blank.png",                    // Link or path to an icon image for your game!
     ID: "myGrindcraftGame",                             // Your game's ID! Should be unique for every game!
@@ -9,8 +9,8 @@ setGameInfo({
 // Resources
 
 addResources({                                          // Function for adding all the resources (items/tools/buildings) that are used in your game!
-    dirt: {
-        image: "images/dirt.png",
+    wood: {
+        image: "images/wood.jpeg",
     },
     stick: {
         image: "images/stick.png",
@@ -24,9 +24,7 @@ addResources({                                          // Function for adding a
     "crafting table": {
         image: "images/craftingTable.png",
     },
-    "dirt hut": {
-        image: "images/dirtHut.png",
-    },
+    
 });
 
 // Areas
@@ -42,17 +40,12 @@ addArea("c",                                            // Function for adding a
         {
             name: "surface",
             unlocked: true,
-            auto: ["dirt hut"],                         // List of items that will auto-grind this grind
+            auto: [""],                         // List of items that will auto-grind this grind
             background: "images/grinds/overworld.png",
             resources: [
                 {
-                    id: "stick",
+                    id: "wood",
                     time: [["", 0.5]],
-                    probability: 50,
-                },
-                {
-                    id: "dirt",
-                    time: [["", 0.6]],
                     probability: 50,
                 },
             ]
@@ -67,10 +60,10 @@ addArea("c",                                            // Function for adding a
             cost: [["stick", 0]],
         },
         {
-            name: "dirt",
-            desc: "Used to build a dirt hut",
+            name: "wood",
+            desc: "Needed for most crafts",
             type: "display",
-            cost: [["dirt", 0]],
+            cost: [["wood", 0]],
         },
         {
             name: "planks",
@@ -91,13 +84,7 @@ addArea("c",                                            // Function for adding a
             amount: 3,
             cost: [["planks", 6]],
         },
-        {
-            name: "dirt hut",
-            desc: "Required to beat the game!",
-            type: "craft",
-            cost: [["dirt", 23], ["crafting table", 1], ["door", 1]],
-            message: "You have beaten the game!",
-        },
+        
     ],
 
     update(diff) {                                      // diff is the time in milliseconds since last time the update function was runned
